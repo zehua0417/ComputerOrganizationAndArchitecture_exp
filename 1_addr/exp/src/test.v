@@ -2,29 +2,60 @@
  
 module test ;
     // input 
-    reg [31:0] operand1, operand2;
+    reg [15:0] operand1, operand2;
     reg        carry_in;
-    
+    wire [15:0] comp_1, comp_2;
+
     // output
-    wire [31:0] sum;
-    wire        carry_out;
+    wire [15:0] sum;
+    wire [15:0] result;
+    wire       carry_out;
+    wire       g;
+    wire       p;
     wire       overflow;
     wire       zero_flag;
     wire       negative_flag;
     wire       carry_flag;
 
+    //four_bit_LCU_adder four_bit_LCD_adder_1(
+    //    .input_1(operand1),
+    //    .input_2(operand2),
+    //    .cin(carry_in),
+    //    .sum(sum),
+    //    .co(carry_out),
+    //    .po(p),
+    //    .go(g)
+    //);
 
-    full_adder1 u_adder(
-        .Num_1   (operand1),
-        .Num_2   (operand2),
-        .Cin     (carry_in),
-        .Sum     (sum),
-        .Cout    (carry_out),
-        .OV      (overflow),
-        .ZF      (zero_flag),
-        .NF      (negative_flag),
-        .CF      (carry_flag)
+    complement complement_1(
+        .Num(operand1),
+        .Comp(comp_1)
+    ); 
+
+    complement complement_2(
+        .Num(operand2),
+        .Comp(comp_2)
     );
+
+    sixteen_bit_full_adder sixteen_bit_full_adder_1(
+        .Num_1(comp_1),
+        .Num_2(comp_2),
+        .Cin(carry_in),
+        .Sum(sum),
+        .Cout(carry_out),
+        .po(p),
+        .go(g),
+        .OV(overflow),
+        .ZF(zero_flag),
+        .NF(negative_flag),
+        .CF(carry_flag)
+    );
+
+    complement complement_3(
+        .Num(sum),
+        .Comp(result)
+    );  
+    
 
     initial begin 
         operand1 = 0;
@@ -37,10 +68,14 @@ module test ;
         carry_in = 1;
         #100;
 
-        operand1 = 32'h80000000;
-        operand2 = 32'hffffff00;
+        operand1 = -1;
+        operand2 = -2;
         carry_in = 0;
         #100;
+
+        operand1 = 1000_0000_0000_0000;
+        operand2 = 1000_0000_0000_0000;
+        carry_in = 0;
     end
 
     // always #10 operand1 = $random;
