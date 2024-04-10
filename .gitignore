@@ -3,6 +3,8 @@
 *.ip_user_files/
 *.sim/
 temp/
+log/
 
 *.xpr 
 *.swp
+*.log

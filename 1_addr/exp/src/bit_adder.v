@@ -7,7 +7,7 @@ module bit_adder(
  
     wire Xor;
 
-    assign xor = Bit_1 ^ Bit_2;
+    assign Xor = Bit_1 ^ Bit_2;
     assign So = Xor ^ Cin;
     assign Co = Xor & Cin | Bit_1 & Bit_2;
 endmodule
