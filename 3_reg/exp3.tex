@@ -293,6 +293,8 @@ endmodule //regfile
 
 \end{lstlisting}
 
+需要注意的是, 本寄存器堆中的test\_addr和test\_data是为了方便在触摸屏上显示寄存器的值而添加的.
+
 \section{tb}
 \begin{lstlisting}[style={verilog-style}]
 module tb_regfile;
@@ -360,6 +362,13 @@ endmodule // tb_regfile
     
 \end{lstlisting}
 
+\section{display}
+这部分代码是为了在触摸屏上显示寄存器的值, 
+但是我没能成功的实现它, 不知道为什么程序卡在了生成bitstream的地方.
+
+由于这部分代码还有问题, 因此我没有将其放在这里, 想要查看的话可以上我的github仓库, 见附录, 
+将来有时间我或许会尝试解决这个问题, 并在github上更新.
+
 \section{仿真结果}
 
 \begin{figure}[htbp]
@@ -376,7 +385,18 @@ endmodule // tb_regfile
 
 70ns - 100ns: 两个独守巨口raddr1, raddr2一个置为0f, 一个置为05, rdata1, rdata2成功分别读取数据12345678和aaaabbbb
 
+\section{FPGA实现}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/fpga}
+    \caption{FPGA实现}
+    \label{fig:fpga}
+\end{figure}
+由于display的部分我没有完成, 因此我的代码并不能在FPGA触控板上运行.
+这里的图片是老师给的代码在FPGA上的运行结果.
+
 %\chapter{思考与讨论}
+
 %\section{课后问题}
 %论文后部
 \backmatter
